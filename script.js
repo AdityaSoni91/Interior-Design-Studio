@@ -262,7 +262,12 @@
     const scale = Math.max(cWidth / iWidth, cHeight / iHeight);
     const drawWidth = iWidth * scale;
     const drawHeight = iHeight * scale;
-    const offsetX = (cWidth - drawWidth) / 2;
+
+    // Portrait mobile vs desktop framing:
+    // On portrait mobile, align slightly toward the curated interior focal point
+    const isPortrait = cWidth < cHeight;
+    const horizontalAnchor = isPortrait ? 0.52 : 0.50;
+    const offsetX = (cWidth - drawWidth) * horizontalAnchor;
     const offsetY = (cHeight - drawHeight) / 2;
 
     ctx.clearRect(0, 0, cWidth, cHeight);
@@ -298,17 +303,20 @@
     const progress = Math.max(0, Math.min(1, scrollTop / maxScroll));
     targetFrame = progress * (TOTAL_FRAMES - 1);
 
-    // Hero Text Fade & Parallax on scroll
-    // Fades smoothly over the first 35% of the hero scroll distance
-    const fadeThreshold = 0.35;
+    // Responsive Hero Text Fade & Parallax on scroll
+    // On mobile, use a gentler threshold so content doesn't abruptly vanish on short thumb swipes
+    const isMobile = window.innerWidth <= 768;
+    const fadeThreshold = isMobile ? 0.48 : 0.35;
     const fadeRatio = Math.min(1, progress / fadeThreshold);
-    const heroOpacity = Math.max(0, 1 - fadeRatio);
-    const heroTranslateY = -45 * fadeRatio;
+    const easedFade = Math.pow(fadeRatio, 1.2);
+    const heroOpacity = Math.max(0, 1 - easedFade);
+    const heroTranslateY = (isMobile ? -32 : -45) * easedFade;
 
     if (heroContent) {
       heroContent.style.opacity = heroOpacity.toFixed(3);
       heroContent.style.transform = `translateY(${heroTranslateY.toFixed(1)}px)`;
       heroContent.style.visibility = heroOpacity <= 0 ? 'hidden' : 'visible';
+      heroContent.style.pointerEvents = heroOpacity < 0.1 ? 'none' : 'auto';
     }
 
     // Navbar background blur and active state
@@ -358,8 +366,10 @@
 
     // Lerp damping for silky smooth scrub
     const diff = targetFrame - currentFrame;
+    const isMobile = window.innerWidth <= 768;
+    const lerpRate = isMobile ? 0.15 : 0.12;
     if (Math.abs(diff) > 0.0001) {
-      currentFrame += diff * 0.12;
+      currentFrame += diff * lerpRate;
     } else {
       currentFrame = targetFrame;
     }
