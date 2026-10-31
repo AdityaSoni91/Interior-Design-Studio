@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 :root {
   --primary-accent: #dcae82;
   --primary-accent-hover: #e5ba91;
@@ -18,16 +22,26 @@
 
 html {
   scroll-behavior: auto; /* Handled smoothly by Lenis */
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
-html, body {
+body {
   width: 100%;
+  max-width: 100%;
   min-height: 100%;
   background-color: var(--bg-dark);
   color: var(--text-white);
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
+  position: relative;
   -webkit-font-smoothing: antialiased;
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
 }
 
 /* =========================================
@@ -35,10 +49,9 @@ html, body {
    ========================================= */
 .loader {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   background-color: var(--bg-dark);
   display: flex;
   justify-content: center;
@@ -249,9 +262,9 @@ html, body {
 /* Mobile Navigation Drawer */
 .mobile-nav-drawer {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
   height: 100dvh;
   background: rgba(12, 11, 9, 0.97);
   backdrop-filter: blur(24px);
@@ -260,6 +273,10 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 80px 24px 40px;
   align-items: center;
   opacity: 0;
   visibility: hidden;
@@ -319,8 +336,10 @@ html, body {
   position: sticky;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
+  max-width: 100%;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -894,7 +913,8 @@ html, body {
 }
 
 .signature-line {
-  width: 110%;
+  width: 100%;
+  max-width: 180px;
   height: 1px;
   background: linear-gradient(90deg, var(--primary-accent) 0%, rgba(220, 174, 130, 0) 100%);
   margin-top: 2px;
@@ -1556,6 +1576,9 @@ html, body {
 .form-group input,
 .form-group select,
 .form-group textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   background: rgba(14, 13, 10, 0.85);
   border: 1px solid rgba(220, 174, 130, 0.25);
   color: #ffffff;
@@ -1647,6 +1670,39 @@ html, body {
 /* =========================================
    RESPONSIVE DESIGN BREAKPOINTS
    ========================================= */
+
+/* Prevent grid blowout across all screens */
+.project-card,
+.statement-media-card,
+.about-arch-col,
+.arch-card,
+.gallery-card,
+.service-feature-card,
+.service-sub-card,
+.service-split-card,
+.process-stage-item,
+.stage-media-wrap,
+.consultation-form,
+.stat-box {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Ensure all headings break cleanly without overflow */
+.hero-title,
+.statement-headline,
+.section-title,
+.about-title,
+.philosophy-title,
+.contact-headline,
+.service-title,
+.project-name,
+.stage-title {
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* --- 1. Laptops & Large Tablets (max-width: 1200px) --- */
 @media (max-width: 1200px) {
   .about-top-grid {
     grid-template-columns: 1fr 1fr;
@@ -1654,7 +1710,7 @@ html, body {
   }
   .about-arch-col {
     grid-column: span 2;
-    max-width: 500px;
+    max-width: 480px;
     margin: 0 auto;
   }
   .about-bottom-grid {
@@ -1662,7 +1718,7 @@ html, body {
     gap: 48px;
   }
   .gallery-cards-col {
-    max-width: 480px;
+    max-width: 460px;
   }
   .process-timeline-track {
     display: none;
@@ -1673,6 +1729,38 @@ html, body {
   }
 }
 
+/* --- 2. Tablets Landscape (max-width: 1024px) --- */
+@media (max-width: 1024px) {
+  .statement-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .statement-media-card {
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+  .projects-grid .project-card:last-child {
+    grid-column: span 2;
+  }
+  .services-editorial-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .consultation-form {
+    max-width: 640px;
+  }
+}
+
+/* --- 3. Tablets Portrait & Mobile Navigation (max-width: 900px) --- */
 @media (max-width: 900px) {
   .nav-links {
     display: none;
@@ -1686,40 +1774,47 @@ html, body {
   .navbar {
     --nav-height: 68px;
   }
-  .statement-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  .projects-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .services-editorial-layout {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
   .hero-scroll-wrapper {
     height: 145vh; /* Fluid, natural mobile scroll scrub */
   }
   .canvas-sticky-container {
-    height: 100dvh; /* Adapts dynamically to mobile address bar */
+    height: 100vh;
+    height: 100dvh;
   }
   #animation-canvas {
+    height: 100vh;
     height: 100dvh;
+  }
+  .about-top-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .about-arch-col {
+    grid-column: span 1;
+    max-width: 380px;
+    margin: 0 auto;
   }
 }
 
+/* --- 4. Mobile Devices & Phablets (max-width: 768px) --- */
 @media (max-width: 768px) {
-  /* Section Spacing for Mobile */
+  /* Section Spacing & Containers */
   .brand-statement-section,
   .portfolio-section,
   .about-section,
   .services-section,
   .process-section,
   .contact-section {
-    padding: 80px 0 90px;
+    padding: 70px 0 80px;
+  }
+
+  .brand-statement-container,
+  .portfolio-container,
+  .about-container,
+  .services-container,
+  .process-container,
+  .contact-container {
+    padding: 0 clamp(18px, 4.5vw, 28px);
   }
 
   .section-header {
@@ -1728,89 +1823,106 @@ html, body {
   }
 
   .section-title {
-    font-size: clamp(2rem, 7vw, 2.6rem);
+    font-size: clamp(1.9rem, 6.5vw, 2.5rem);
   }
 
-  /* Hero Section on Mobile */
+  /* Responsive Headings: allow natural flow instead of forced hard breaks */
+  .statement-headline br,
+  .about-title br,
+  .philosophy-title br,
+  .contact-headline br {
+    display: inline;
+    content: ' ';
+  }
+
+  /* Hero Section */
   .hero-overlay {
     padding-left: clamp(18px, 5vw, 28px);
     padding-right: clamp(18px, 5vw, 28px);
+    padding-top: calc(var(--nav-height) + 12px);
+    padding-bottom: 36px;
     justify-content: center;
   }
   .hero-content-inner {
     margin-top: 0;
+    max-width: 100%;
   }
   .hero-eyebrow {
     font-size: 11px;
     letter-spacing: 0.28em;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
   .hero-title {
-    font-size: clamp(2.3rem, 8vw, 3.2rem);
+    font-size: clamp(1.85rem, 6.8vw, 2.8rem);
     line-height: 1.15;
     margin-bottom: 18px;
   }
   .hero-description {
     font-size: 14.5px;
     line-height: 1.6;
-    margin-bottom: 28px;
+    margin-bottom: 26px;
+    max-width: 100%;
   }
   .hero-buttons {
     gap: 12px;
   }
   .btn-primary, .btn-secondary {
-    padding: 13px 24px;
-    font-size: 14px;
+    padding: 13px 22px;
+    font-size: 13.5px;
   }
   .scroll-indicator {
-    bottom: 18px;
+    bottom: 16px;
   }
 
-  /* Brand Statement on Mobile */
+  /* Brand Statement */
   .statement-headline {
-    font-size: clamp(2rem, 6.8vw, 2.7rem);
-    margin-bottom: 20px;
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    margin-bottom: 18px;
+    line-height: 1.2;
   }
   .statement-body {
-    font-size: 15px;
+    font-size: 14.5px;
     line-height: 1.68;
-    margin-bottom: 30px;
+    margin-bottom: 28px;
   }
   .statement-pillars-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    gap: 10px;
     padding-top: 24px;
   }
   .stat-number {
-    font-size: clamp(1.8rem, 5.5vw, 2.2rem);
+    font-size: clamp(1.5rem, 4.8vw, 2rem);
   }
   .stat-label {
-    font-size: 10px;
-    letter-spacing: 0.1em;
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
   }
 
-  /* Portfolio on Mobile */
+  /* Portfolio */
   .projects-grid {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 26px;
+  }
+  .projects-grid .project-card:last-child {
+    grid-column: span 1;
   }
   .project-content {
-    padding: 22px 20px 24px;
+    padding: 22px 18px 24px;
   }
   .project-name {
-    font-size: 20px;
+    font-size: 19px;
   }
 
-  /* About Section on Mobile */
+  /* About Section */
   .about-top-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
-    margin-bottom: 60px;
+    gap: 36px;
+    margin-bottom: 55px;
   }
   .about-title {
-    font-size: clamp(2.1rem, 7vw, 2.8rem);
-    margin-bottom: 20px;
+    font-size: clamp(1.85rem, 6.2vw, 2.5rem);
+    margin-bottom: 18px;
   }
   .about-signature span {
     font-size: 32px;
@@ -1819,58 +1931,60 @@ html, body {
     grid-column: span 1;
     max-width: 320px;
     margin: 0 auto;
+    width: 100%;
   }
   .timeline-track {
-    padding-left: 24px;
-    gap: 28px;
+    padding-left: 22px;
+    gap: 26px;
   }
   .timeline-dot {
-    left: -29px;
+    left: -27px;
   }
   .about-bottom-grid {
     grid-template-columns: 1fr;
-    gap: 36px;
-    padding-top: 40px;
+    gap: 32px;
+    padding-top: 36px;
   }
   .gallery-cards-col {
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 8px;
+    max-width: 100%;
   }
   .philosophy-title {
-    font-size: clamp(1.9rem, 6vw, 2.4rem);
+    font-size: clamp(1.75rem, 5.5vw, 2.2rem);
   }
   .pillars-grid {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 16px;
   }
 
-  /* Services Section on Mobile */
+  /* Services Section */
   .services-split-row {
     grid-template-columns: 1fr;
-    gap: 26px;
+    gap: 24px;
   }
   .service-feature-card .service-title {
-    font-size: 22px;
+    font-size: 21px;
   }
   .service-title {
-    font-size: 20px;
+    font-size: 19px;
   }
   .service-feature-caption,
   .service-sub-caption,
   .service-split-caption {
-    padding: 22px 20px 24px;
+    padding: 20px 18px 22px;
   }
 
   /* Process Section - Mobile Timeline */
   .process-timeline-wrapper {
-    margin-top: 45px;
+    margin-top: 40px;
   }
   .process-timeline-track {
     display: none;
   }
   .process-stages-grid {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 32px;
     position: relative;
     padding-left: 24px;
     border-left: 1.5px solid rgba(220, 174, 130, 0.35);
@@ -1888,35 +2002,35 @@ html, body {
     background-color: var(--primary-accent);
   }
 
-  /* Contact & Form on Mobile */
+  /* Contact & Form */
   .contact-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
-    margin-bottom: 60px;
+    gap: 36px;
+    margin-bottom: 50px;
   }
   .contact-headline {
-    font-size: clamp(2.1rem, 7vw, 2.9rem);
+    font-size: clamp(1.85rem, 6.2vw, 2.6rem);
   }
   .consultation-form {
     padding: 24px 18px;
+    max-width: 100%;
   }
   .form-row {
     grid-template-columns: 1fr;
     gap: 0;
   }
-  /* Crucial iOS Safari fix: input font-size >= 16px prevents disruptive auto-zoom on mobile */
   .form-group input,
   .form-group select,
   .form-group textarea {
-    font-size: 16px;
-    padding: 14px 16px;
+    font-size: 16px; /* Prevents unwanted iOS Safari page zoom */
+    padding: 13px 15px;
   }
   .btn-submit {
-    height: 50px;
-    font-size: 15px;
+    height: 48px;
+    font-size: 14.5px;
   }
 
-  /* Footer on Mobile */
+  /* Footer */
   .footer-bottom {
     flex-direction: column;
     text-align: center;
@@ -1925,20 +2039,136 @@ html, body {
   .footer-brand {
     flex-direction: column;
     gap: 6px;
+    align-items: center;
   }
 }
 
+/* --- 5. Small Phones (max-width: 480px) --- */
 @media (max-width: 480px) {
+  .brand-statement-section,
+  .portfolio-section,
+  .about-section,
+  .services-section,
+  .process-section,
+  .contact-section {
+    padding: 55px 0 65px;
+  }
+
+  .brand-statement-container,
+  .portfolio-container,
+  .about-container,
+  .services-container,
+  .process-container,
+  .contact-container {
+    padding: 0 16px;
+  }
+
+  .nav-container {
+    padding: 0 16px;
+  }
+
+  .brand-name {
+    font-size: 17px;
+    letter-spacing: 0.22em;
+  }
+
+  .brand-sub {
+    font-size: 8px;
+    letter-spacing: 0.35em;
+  }
+
+  .hero-overlay {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .hero-title {
+    font-size: clamp(1.7rem, 7.5vw, 2.2rem);
+    margin-bottom: 14px;
+  }
+
   .hero-buttons {
     flex-direction: column;
     width: 100%;
+    align-items: stretch;
   }
+
   .btn-primary, .btn-secondary {
     width: 100%;
     justify-content: center;
+    padding: 12px 18px;
   }
+
   .statement-pillars-row {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .stat-box {
+    align-items: center;
+  }
+
+  .gallery-cards-col {
+    gap: 6px;
+  }
+
+  .consultation-form {
+    padding: 20px 14px;
+    border-radius: 16px;
+  }
+
+  .process-stages-grid {
+    padding-left: 20px;
+  }
+
+  .stage-timeline-marker {
+    left: -27px;
+  }
+}
+
+/* --- 6. Very Narrow Screens (max-width: 360px) --- */
+@media (max-width: 360px) {
+  .brand-name {
+    font-size: 15px;
+    letter-spacing: 0.18em;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+  }
+
+  .hero-title {
+    font-size: 1.55rem;
+  }
+
+  .hero-description {
+    font-size: 13.5px;
+  }
+
+  .gallery-cards-col {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .gallery-card {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* --- 7. Short Viewports (max-height: 720px) --- */
+@media (max-height: 720px) {
+  .scroll-indicator {
+    display: none !important;
+  }
+  .hero-eyebrow {
+    margin-bottom: 8px;
+  }
+  .hero-title {
+    margin-bottom: 12px;
+  }
+  .hero-description {
+    margin-bottom: 18px;
   }
 }

@@ -215,14 +215,14 @@
   }
 
   function resizeCanvas() {
-    const dpr = window.devicePixelRatio || 1;
-    const displayWidth = window.innerWidth;
-    const displayHeight = window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const displayWidth = canvas.clientWidth || window.innerWidth;
+    const displayHeight = canvas.clientHeight || window.innerHeight;
 
     canvas.width = Math.round(displayWidth * dpr);
     canvas.height = Math.round(displayHeight * dpr);
-    canvas.style.width = `${displayWidth}px`;
-    canvas.style.height = `${displayHeight}px`;
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
 
     // Force redraw on resize
     renderedFrame = -1;
@@ -425,6 +425,9 @@
   }
 
   window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('orientationchange', () => {
+    setTimeout(resizeCanvas, 150);
+  });
   resizeCanvas();
   preloadImages();
   requestAnimationFrame(tick);
