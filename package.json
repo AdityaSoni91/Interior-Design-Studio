@@ -1,0 +1,19 @@
+{
+  "name": "interior-design-website",
+  "version": "1.0.0",
+  "description": "INNOVA INTERIORS - Smooth Scroll Animation & Showcase",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "serve": "npx serve -l 3000 ."
+  },
+  "keywords": [
+    "interior-design",
+    "smooth-scroll",
+    "canvas-animation"
+  ],
+  "author": "",
+  "license": "ISC"
+}
+

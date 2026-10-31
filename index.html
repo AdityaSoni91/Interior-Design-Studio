@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INNOVA INTERIORS | Spaces That Inspire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Lenis for smooth momentum-based scrolling -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  <!-- GSAP & ScrollTrigger for cinematic reveals -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+  <!-- Loading Indicator -->
+  <div id="loader" class="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <div class="loader-text"><span id="loader-progress">0</span>%</div>
+    </div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-brand">
+        <span class="brand-name">INNOVɅ</span>
+        <span class="brand-sub">INTERIORS</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#home" class="nav-link active" id="nav-home">Home</a>
+        <a href="#portfolio" class="nav-link" id="nav-portfolio">Portfolio</a>
+        <a href="#about" class="nav-link" id="nav-about">About</a>
+        <a href="#services" class="nav-link" id="nav-services">Services</a>
+        <a href="#process" class="nav-link" id="nav-process">Process</a>
+        <a href="#contact" class="nav-link" id="nav-contact">Contact</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a href="#contact" class="btn-quote desktop-only">
+          <span>Get a Quote</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav-drawer" id="mobile-nav">
+      <div class="mobile-nav-links">
+        <a href="#home" class="mobile-nav-link active">Home</a>
+        <a href="#portfolio" class="mobile-nav-link">Portfolio</a>
+        <a href="#about" class="mobile-nav-link">About</a>
+        <a href="#services" class="mobile-nav-link">Services</a>
+        <a href="#process" class="mobile-nav-link">Process</a>
+        <a href="#contact" class="mobile-nav-link">Contact</a>
+      </div>
+      <div class="mobile-nav-footer">
+        <a href="#contact" class="btn-quote mobile-quote-btn">
+          <span>Get a Quote</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==============================================
+       SECTION 1: HERO & 3D CANVAS SCROLL WRAPPER
+       ============================================== -->
+  <div class="hero-scroll-wrapper" id="home">
+    <div class="canvas-sticky-container">
+      <canvas id="animation-canvas"></canvas>
+
+      <!-- Hero Content Overlay (Preserved original design & typography) -->
+      <div class="hero-overlay" id="hero-content">
+        <div class="hero-content-inner">
+          <p class="hero-eyebrow">SPACES THAT INSPIRE</p>
+          <h1 class="hero-title">
+            <span class="title-line title-white">Beautiful Interiors.</span>
+            <span class="title-line title-accent">Better Living.</span>
+          </h1>
+          <p class="hero-description">
+            We design timeless spaces that reflect your personality, lifestyle and dreams.
+          </p>
+          <div class="hero-buttons">
+            <a href="#portfolio" class="btn-primary">
+              <span>Explore Our Work</span>
+              <svg class="arrow-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <a href="#brand-statement" class="btn-secondary">
+              <span class="play-circle">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                  <polygon points="6 4 20 12 6 20 6 4"></polygon>
+                </svg>
+              </span>
+              <span>Watch Video</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator" id="scroll-indicator">
+          <div class="mouse-icon">
+            <svg width="22" height="34" viewBox="0 0 22 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="1" width="20" height="32" rx="10" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M11 8V14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="wheel-anim"/>
+              <path d="M8 18L11 21L14 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="scroll-label">SCROLL TO EXPLORE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================
+       SECTION 2: CINEMATIC BRAND STATEMENT
+       ============================================== -->
+  <section class="brand-statement-section" id="brand-statement">
+    <div class="statement-backdrop-texture"></div>
+    <div class="brand-statement-container">
+      
+      <div class="statement-header">
+        <div class="section-eyebrow">
+          <span>OUR DESIGN PHILOSOPHY</span>
+          <span class="eyebrow-divider"></span>
+        </div>
+      </div>
+
+      <div class="statement-grid">
+        <div class="statement-text-col">
+          <h2 class="statement-headline reveal-text">
+            Every space has a story.<br>
+            <span class="statement-accent">Let's make yours extraordinary.</span>
+          </h2>
+          <p class="statement-body reveal-fade">
+            We believe exceptional interiors go beyond aesthetics. We bring together thoughtful design, purposeful functionality, and timeless materials to create spaces that feel uniquely yours.
+          </p>
+
+          <div class="statement-pillars-row reveal-fade">
+            <div class="stat-box">
+              <span class="stat-number">10+</span>
+              <span class="stat-label">Years of Mastery</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">100+</span>
+              <span class="stat-label">Curated Spaces</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Bespoke Precision</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="statement-media-col reveal-fade">
+          <div class="statement-media-card">
+            <img src="assets/brand-statement-bg.jpg" alt="Architectural Harmony and Material Textures" class="statement-img">
+            <div class="statement-floating-badge">
+              <span class="badge-dot"></span>
+              <span>Harmonious Architecture</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==============================================
+       SECTION 3: FEATURED PROJECTS (PORTFOLIO)
+       ============================================== -->
+  <section class="portfolio-section" id="portfolio">
+    <div class="portfolio-container">
+      
+      <div class="section-header">
+        <div class="header-left">
+          <div class="section-eyebrow">
+            <span>SELECTED WORK</span>
+            <span class="eyebrow-divider"></span>
+          </div>
+          <h2 class="section-title">Spaces We've Brought to Life</h2>
+        </div>
+        <p class="section-subtitle">
+          Discover thoughtfully designed interiors that balance beauty, comfort, and functionality.
+        </p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1: The Modern Residence -->
+        <article class="project-card reveal-card">
+          <div class="project-media-wrap">
+            <img src="assets/project-1.jpg" alt="The Modern Residence — Residential" class="project-img" loading="lazy">
+            <div class="project-badge">01 / Residential</div>
+            <div class="project-overlay-glow"></div>
+          </div>
+          <div class="project-content">
+            <div class="project-meta">
+              <span class="project-cat">Residential</span>
+              <span class="project-dash">&mdash;</span>
+              <span class="project-year">Concept Design</span>
+            </div>
+            <h3 class="project-name">The Modern Residence</h3>
+            <p class="project-desc">
+              A serene open-plan sanctuary celebrating natural timber warmth, bespoke low-slung seating, and sculptural ambient illumination.
+            </p>
+            <a href="#contact" class="project-link">
+              <span>Explore Project</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Project 2: The Contemporary Workspace -->
+        <article class="project-card reveal-card">
+          <div class="project-media-wrap">
+            <img src="assets/project-2.jpg" alt="The Contemporary Workspace — Commercial" class="project-img" loading="lazy">
+            <div class="project-badge">02 / Commercial</div>
+            <div class="project-overlay-glow"></div>
+          </div>
+          <div class="project-content">
+            <div class="project-meta">
+              <span class="project-cat">Commercial</span>
+              <span class="project-dash">&mdash;</span>
+              <span class="project-year">Concept Design</span>
+            </div>
+            <h3 class="project-name">The Contemporary Workspace</h3>
+            <p class="project-desc">
+              An inspiring professional studio harmonizing rich leather ergonomics, artisanal joinery, and tailored task lighting for deep focus.
+            </p>
+            <a href="#contact" class="project-link">
+              <span>Explore Project</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Project 3: The Serene Retreat -->
+        <article class="project-card reveal-card">
+          <div class="project-media-wrap">
+            <img src="assets/project-3.jpg" alt="The Serene Retreat — Living Spaces" class="project-img" loading="lazy">
+            <div class="project-badge">03 / Living Spaces</div>
+            <div class="project-overlay-glow"></div>
+          </div>
+          <div class="project-content">
+            <div class="project-meta">
+              <span class="project-cat">Living Spaces</span>
+              <span class="project-dash">&mdash;</span>
+              <span class="project-year">Concept Design</span>
+            </div>
+            <h3 class="project-name">The Serene Retreat</h3>
+            <p class="project-desc">
+              Tactile linen finishes, warm acoustic wall paneling, and intimate golden chiaroscuro that invite mindful evening unwindings.
+            </p>
+            <a href="#contact" class="project-link">
+              <span>Explore Project</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==============================================
+       SECTION 4: EXISTING ABOUT SECTION
+       ============================================== -->
+  <section class="about-section" id="about">
+    <div class="about-container">
+      
+      <!-- Top Row: About Story, Timeline, and Arched Visual -->
+      <div class="about-top-grid">
+        
+        <!-- Column 1: Story -->
+        <div class="about-story-col">
+          <div class="section-eyebrow">
+            <span>ABOUT US</span>
+            <span class="eyebrow-divider"></span>
+          </div>
+
+          <h2 class="about-title">
+            <span class="title-line title-white">Designing Spaces.</span>
+            <span class="title-line title-accent">Building Stories.</span>
+          </h2>
+
+          <div class="about-paragraphs">
+            <p>
+              At <strong>Innova Interiors</strong>, we believe that every space has a story waiting to be told. Founded in 2015, we started with a simple idea &mdash; to create beautiful, functional and timeless interiors that reflect the unique personality of each client.
+            </p>
+            <p>
+              Today, we are a full-service interior design studio, working with homeowners, businesses and developers to transform spaces into extraordinary experiences.
+            </p>
+          </div>
+
+          <div class="about-signature">
+            <span>Innova Interiors</span>
+            <div class="signature-line"></div>
+          </div>
+        </div>
+
+        <!-- Column 2: Timeline -->
+        <div class="about-timeline-col">
+          <div class="timeline-track">
+            
+            <div class="timeline-node">
+              <div class="timeline-dot"></div>
+              <div class="timeline-info">
+                <span class="timeline-year">2015</span>
+                <h4 class="timeline-title">THE BEGINNING</h4>
+                <p class="timeline-desc">
+                  Innova Interiors was founded with a vision to bring fresh, modern and personalized design solutions to life.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline-node">
+              <div class="timeline-dot"></div>
+              <div class="timeline-info">
+                <span class="timeline-year">2018</span>
+                <h4 class="timeline-title">GROWTH &amp; TRUST</h4>
+                <p class="timeline-desc">
+                  We expanded our team, completed 100+ projects and built lasting relationships with our clients.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline-node">
+              <div class="timeline-dot"></div>
+              <div class="timeline-info">
+                <span class="timeline-year">2021</span>
+                <h4 class="timeline-title">BIGGER DREAMS</h4>
+                <p class="timeline-desc">
+                  We opened our design studio and started working on large-scale residential and commercial projects.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline-node">
+              <div class="timeline-dot"></div>
+              <div class="timeline-info">
+                <span class="timeline-year">2025</span>
+                <h4 class="timeline-title">THE JOURNEY CONTINUES</h4>
+                <p class="timeline-desc">
+                  Today, we continue to evolve, explore new ideas and create spaces that inspire.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Column 3: Arched Showcase Visual -->
+        <div class="about-arch-col">
+          <div class="arch-card">
+            <img src="assets/about-arch.jpg" alt="Innova Luxury Interior Architecture" class="arch-img">
+            <div class="arch-caption">
+              <em>More than interiors,<br>we create lifestyles.</em>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Row: Philosophy, Detail Cards, and Core Pillars -->
+      <div class="about-bottom-grid">
+        
+        <!-- 3 Detail Mini Cards -->
+        <div class="gallery-cards-col">
+          <div class="gallery-card">
+            <img src="assets/card-1.jpg" alt="Artistic Sculptural Interior Detail">
+          </div>
+          <div class="gallery-card">
+            <img src="assets/card-2.jpg" alt="Executive Workspace Lighting">
+          </div>
+          <div class="gallery-card">
+            <img src="assets/card-3.jpg" alt="Cozy Warm Wood Bedroom Ambience">
+          </div>
+        </div>
+
+        <!-- Philosophy Text Column -->
+        <div class="philosophy-text-col">
+          <div class="section-eyebrow">
+            <span>OUR PHILOSOPHY</span>
+            <span class="eyebrow-divider"></span>
+          </div>
+
+          <h3 class="philosophy-title">
+            <span class="title-line title-white">Thoughtful Design.</span>
+            <span class="title-line title-accent">Lasting Impact.</span>
+          </h3>
+
+          <p class="philosophy-desc">
+            We approach every project with creativity, attention to detail and a deep understanding of how spaces influence the way people live, work and feel.
+          </p>
+        </div>
+
+        <!-- 4 Core Pillars Grid (2x2) -->
+        <div class="philosophy-pillars-col">
+          <div class="pillars-grid">
+            
+            <!-- Pillar 1: Creativity -->
+            <div class="pillar-card">
+              <div class="pillar-icon-box">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 18h6"/>
+                  <path d="M10 22h4"/>
+                  <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/>
+                </svg>
+              </div>
+              <div class="pillar-info">
+                <h5 class="pillar-title">Creativity</h5>
+                <p class="pillar-desc">Fresh ideas for every space.</p>
+              </div>
+            </div>
+
+            <!-- Pillar 2: Client Focus -->
+            <div class="pillar-card">
+              <div class="pillar-icon-box">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div class="pillar-info">
+                <h5 class="pillar-title">Client Focus</h5>
+                <p class="pillar-desc">Your vision, our priority.</p>
+              </div>
+            </div>
+
+            <!-- Pillar 3: Quality -->
+            <div class="pillar-card">
+              <div class="pillar-icon-box">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div class="pillar-info">
+                <h5 class="pillar-title">Quality</h5>
+                <p class="pillar-desc">Timeless materials, flawless execution.</p>
+              </div>
+            </div>
+
+            <!-- Pillar 4: Sustainability -->
+            <div class="pillar-card">
+              <div class="pillar-icon-box">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                </svg>
+              </div>
+              <div class="pillar-info">
+                <h5 class="pillar-title">Sustainability</h5>
+                <p class="pillar-desc">Better spaces for a brighter future.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==============================================
+       SECTION 5: SERVICES SECTION (Editorial Redesign)
+       ============================================== -->
+  <section class="services-section" id="services">
+    <div class="services-container">
+      <div class="section-header">
+        <div class="header-left">
+          <div class="section-eyebrow">
+            <span>OUR EXPERTISE</span>
+            <span class="eyebrow-divider"></span>
+          </div>
+          <h2 class="section-title">Comprehensive Design Services</h2>
+        </div>
+        <p class="section-subtitle">
+          From visionary concept to bespoke realization, we orchestrate every dimension with architectural precision.
+        </p>
+      </div>
+
+      <!-- Asymmetric Editorial Services Layout -->
+      <div class="services-editorial-layout">
+        
+        <!-- Dominant Feature Service: 01 Residential Interiors -->
+        <article class="service-feature-card reveal-card">
+          <div class="service-feature-media">
+            <img src="assets/service-residential.jpg" alt="Residential Interiors — INNOVA" class="service-img" loading="lazy">
+            <div class="service-gradient-overlay"></div>
+            <span class="service-num-badge">01</span>
+          </div>
+          <div class="service-feature-caption">
+            <div class="service-meta-row">
+              <span class="service-tag">Signature Practice</span>
+              <span class="service-arrow-indicator">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+            <h3 class="service-title">Residential Interiors</h3>
+            <p class="service-description">
+              Thoughtfully designed homes that balance personal expression, comfort, and timeless elegance.
+            </p>
+          </div>
+        </article>
+
+        <!-- Asymmetric Sub Column: Services 02, 03, 04 -->
+        <div class="services-sub-column">
+          
+          <!-- Service 02: Commercial Spaces -->
+          <article class="service-sub-card reveal-card">
+            <div class="service-sub-media">
+              <img src="assets/service-commercial.jpg" alt="Commercial Spaces — INNOVA" class="service-img" loading="lazy">
+              <div class="service-gradient-overlay"></div>
+              <span class="service-num-badge">02</span>
+            </div>
+            <div class="service-sub-caption">
+              <div class="service-meta-row">
+                <span class="service-tag">Workplace &amp; Retail</span>
+                <span class="service-arrow-indicator">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </span>
+              </div>
+              <h3 class="service-title">Commercial Spaces</h3>
+              <p class="service-description">
+                Refined environments for offices, retail spaces, and businesses, designed around people and purpose.
+              </p>
+            </div>
+          </article>
+
+          <!-- Staggered Two-Card Row: 03 Space Planning & 04 Bespoke Interiors -->
+          <div class="services-split-row">
+            
+            <!-- Service 03: Space Planning -->
+            <article class="service-split-card reveal-card">
+              <div class="service-split-media">
+                <img src="assets/service-spaceplanning.jpg" alt="Space Planning — INNOVA" class="service-img" loading="lazy">
+                <div class="service-gradient-overlay"></div>
+                <span class="service-num-badge">03</span>
+              </div>
+              <div class="service-split-caption">
+                <div class="service-meta-row">
+                  <span class="service-tag">Spatial Architecture</span>
+                  <span class="service-arrow-indicator">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </span>
+                </div>
+                <h3 class="service-title">Space Planning</h3>
+                <p class="service-description">
+                  Intelligent layouts that make every square metre feel considered, functional, and beautifully connected.
+                </p>
+              </div>
+            </article>
+
+            <!-- Service 04: Bespoke Interiors -->
+            <article class="service-split-card reveal-card">
+              <div class="service-split-media">
+                <img src="assets/service-bespoke.jpg" alt="Bespoke Interiors — INNOVA" class="service-img" loading="lazy">
+                <div class="service-gradient-overlay"></div>
+                <span class="service-num-badge">04</span>
+              </div>
+              <div class="service-split-caption">
+                <div class="service-meta-row">
+                  <span class="service-tag">Custom Joinery &amp; Finish</span>
+                  <span class="service-arrow-indicator">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </span>
+                </div>
+                <h3 class="service-title">Bespoke Interiors</h3>
+                <p class="service-description">
+                  Carefully selected materials, finishes, furnishings, and details that give each space its own identity.
+                </p>
+              </div>
+            </article>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==============================================
+       SECTION 6: PROCESS SECTION (Curated Journey Redesign)
+       ============================================== -->
+  <section class="process-section" id="process">
+    <div class="process-container">
+      <div class="section-header center-align">
+        <div class="section-eyebrow">
+          <span>OUR METHOD</span>
+          <span class="eyebrow-divider"></span>
+        </div>
+        <h2 class="section-title">The Curated Journey</h2>
+        <p class="section-subtitle centered">
+          A disciplined, collaborative workflow bringing clarity and ease to luxury design.
+        </p>
+      </div>
+
+      <!-- Refined Architectural Timeline Layout -->
+      <div class="process-timeline-wrapper">
+        
+        <!-- Connecting Line Track (Desktop) -->
+        <div class="process-timeline-track">
+          <div class="timeline-gold-bar"></div>
+        </div>
+
+        <div class="process-stages-grid">
+          
+          <!-- Stage 01: Discover -->
+          <div class="process-stage-item reveal-card">
+            <div class="stage-timeline-marker">
+              <span class="stage-marker-dot"></span>
+            </div>
+            <div class="stage-media-wrap">
+              <img src="assets/process-discover.jpg" alt="Phase 01 — Discover" class="stage-img" loading="lazy">
+              <div class="stage-overlay-glow"></div>
+              <span class="stage-num-watermark">01</span>
+            </div>
+            <div class="stage-content">
+              <div class="stage-header-row">
+                <span class="stage-step-tag">STAGE 01</span>
+                <span class="stage-status-dot"></span>
+              </div>
+              <h3 class="stage-title">DISCOVER</h3>
+              <p class="stage-desc">
+                We begin by understanding your lifestyle, aspirations, practical needs, and vision for the space.
+              </p>
+            </div>
+          </div>
+
+          <!-- Stage 02: Design -->
+          <div class="process-stage-item reveal-card">
+            <div class="stage-timeline-marker">
+              <span class="stage-marker-dot"></span>
+            </div>
+            <div class="stage-media-wrap">
+              <img src="assets/process-design.jpg" alt="Phase 02 — Design" class="stage-img" loading="lazy">
+              <div class="stage-overlay-glow"></div>
+              <span class="stage-num-watermark">02</span>
+            </div>
+            <div class="stage-content">
+              <div class="stage-header-row">
+                <span class="stage-step-tag">STAGE 02</span>
+                <span class="stage-status-dot"></span>
+              </div>
+              <h3 class="stage-title">DESIGN</h3>
+              <p class="stage-desc">
+                We translate your ideas into layouts, mood boards, material palettes, and visual concepts.
+              </p>
+            </div>
+          </div>
+
+          <!-- Stage 03: Develop -->
+          <div class="process-stage-item reveal-card">
+            <div class="stage-timeline-marker">
+              <span class="stage-marker-dot"></span>
+            </div>
+            <div class="stage-media-wrap">
+              <img src="assets/process-develop.jpg" alt="Phase 03 — Develop" class="stage-img" loading="lazy">
+              <div class="stage-overlay-glow"></div>
+              <span class="stage-num-watermark">03</span>
+            </div>
+            <div class="stage-content">
+              <div class="stage-header-row">
+                <span class="stage-step-tag">STAGE 03</span>
+                <span class="stage-status-dot"></span>
+              </div>
+              <h3 class="stage-title">DEVELOP</h3>
+              <p class="stage-desc">
+                We refine the details, finishes, furnishings, and design specifications to create a cohesive plan.
+              </p>
+            </div>
+          </div>
+
+          <!-- Stage 04: Deliver -->
+          <div class="process-stage-item reveal-card">
+            <div class="stage-timeline-marker">
+              <span class="stage-marker-dot"></span>
+            </div>
+            <div class="stage-media-wrap">
+              <img src="assets/process-deliver.jpg" alt="Phase 04 — Deliver" class="stage-img" loading="lazy">
+              <div class="stage-overlay-glow"></div>
+              <span class="stage-num-watermark">04</span>
+            </div>
+            <div class="stage-content">
+              <div class="stage-header-row">
+                <span class="stage-step-tag">STAGE 04</span>
+                <span class="stage-status-dot"></span>
+              </div>
+              <h3 class="stage-title">DELIVER</h3>
+              <p class="stage-desc">
+                We guide the final stages of the design journey to help bring the approved vision to life.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================
+       SECTION 7: CONTACT & FOOTER
+       ============================================== -->
+  <section class="contact-section" id="contact">
+    <div class="contact-container">
+      <div class="contact-grid">
+        
+        <div class="contact-info-col">
+          <div class="section-eyebrow">
+            <span>GET IN TOUCH</span>
+            <span class="eyebrow-divider"></span>
+          </div>
+          <h2 class="contact-headline">
+            Let's Shape Your Next<br>
+            <span class="title-accent">Extraordinary Space.</span>
+          </h2>
+          <p class="contact-intro">
+            Whether embarking on a private residence renovation or an inspiring commercial space, our studio is dedicated to realizing your vision.
+          </p>
+
+          <div class="contact-details">
+            <div class="contact-item">
+              <span class="detail-label">Studio Address</span>
+              <span class="detail-value">450 Architect Avenue, Suite 800<br>Design District, NY 10012</span>
+            </div>
+            <div class="contact-item">
+              <span class="detail-label">Direct Inquiries</span>
+              <a href="mailto:hello@innovainteriors.com" class="detail-link">hello@innovainteriors.com</a>
+              <span class="detail-value">+1 (212) 555-0198</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-col">
+          <form class="consultation-form" onsubmit="event.preventDefault(); alert('Thank you for reaching out. An Innova Design Director will contact you within 24 hours.');">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" placeholder="Eleanor Vance" required>
+              </div>
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="eleanor@example.com" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Project Type</label>
+                <select>
+                  <option value="residential">Residential Architecture</option>
+                  <option value="commercial">Commercial / Workspace</option>
+                  <option value="styling">Custom Furniture &amp; Styling</option>
+                  <option value="consultation">Design Consultation</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Approximate Budget</label>
+                <select>
+                  <option value="50k">$50,000 &ndash; $150,000</option>
+                  <option value="150k">$150,000 &ndash; $300,000</option>
+                  <option value="300k+">$300,000+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Project Details &amp; Vision</label>
+              <textarea rows="4" placeholder="Share a few words about your space, timeline, and aesthetic goals..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">
+              <span>Send Inquiry</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <footer class="studio-footer">
+        <div class="footer-bottom">
+          <div class="footer-brand">
+            <span class="brand-name">INNOVɅ</span>
+            <span class="brand-sub">INTERIORS &copy; 2026. All rights reserved.</span>
+          </div>
+          <div class="footer-links">
+            <a href="#home">Back to Top &uarr;</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
