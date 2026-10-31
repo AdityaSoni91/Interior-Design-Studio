@@ -18,6 +18,15 @@
   let lastCanvasWidth = 0;
   let lastCanvasHeight = 0;
 
+  // Defensive fallback keyframe image to guarantee canvas is never black
+  const fallbackImg = new Image();
+  fallbackImg.src = 'assets/project-1.jpg';
+  fallbackImg.onload = () => {
+    if (renderedFrame === -1) {
+      render();
+    }
+  };
+
   // Initialize Lenis smooth momentum scrolling
   let lenis = null;
   if (typeof Lenis !== 'undefined') {
@@ -28,27 +37,45 @@
       touchMultiplier: 1.5,
     });
 
-    function lenisRaf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(lenisRaf);
-    }
-    requestAnimationFrame(lenisRaf);
-  }
-
-  // Connect GSAP ScrollTrigger with Lenis if available
-  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-
-    if (lenis) {
-      lenis.on('scroll', ScrollTrigger.update);
+    // Single dedicated driver for Lenis:
+    // If GSAP is present, use gsap.ticker to eliminate dual RAF conflicts;
+    // otherwise fallback to standard requestAnimationFrame.
+    if (typeof gsap !== 'undefined') {
+      lenis.on('scroll', () => {
+        if (typeof ScrollTrigger !== 'undefined') {
+          ScrollTrigger.update();
+        }
+      });
       gsap.ticker.add((time) => {
         lenis.raf(time * 1000);
       });
       gsap.ticker.lagSmoothing(0);
+    } else {
+      function lenisRaf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(lenisRaf);
+      }
+      requestAnimationFrame(lenisRaf);
     }
+  }
+
+  // Connect GSAP ScrollTrigger
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
 
     // Initialize luxury scroll reveal animations
     initGsapAnimations();
+
+    // Refresh ScrollTrigger calculations after all window assets and fonts load
+    window.addEventListener('load', () => {
+      ScrollTrigger.refresh();
+    });
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        ScrollTrigger.refresh();
+      });
+    }
   }
 
   function initGsapAnimations() {
@@ -216,6 +243,10 @@
         return images[next];
       }
     }
+    // Return fallback keyframe if frames are still loading or delayed over CDN
+    if (fallbackImg && fallbackImg.complete && fallbackImg.naturalWidth > 0) {
+      return fallbackImg;
+    }
     return null;
   }
 
@@ -259,7 +290,7 @@
   }
 
   function updateScrollProgress() {
-    const scrollTop = window.scrollY || window.pageYOffset || 0;
+    const scrollTop = (lenis && typeof lenis.scroll === 'number') ? lenis.scroll : (window.scrollY || window.pageYOffset || 0);
     const wrapperHeight = scrollWrapper ? scrollWrapper.offsetHeight : window.innerHeight * 1.75;
     const maxScroll = Math.max(1, wrapperHeight - window.innerHeight);
 
@@ -334,7 +365,7 @@
     }
 
     // Only render canvas when near or inside the hero wrapper to conserve CPU/GPU
-    const scrollTop = window.scrollY || window.pageYOffset || 0;
+    const scrollTop = (lenis && typeof lenis.scroll === 'number') ? lenis.scroll : (window.scrollY || window.pageYOffset || 0);
     const wrapperHeight = scrollWrapper ? scrollWrapper.offsetHeight : window.innerHeight * 2;
     if (scrollTop <= wrapperHeight + 100) {
       render();
@@ -345,6 +376,21 @@
 
   // Preload frames
   function preloadImages() {
+    let hasDismissedLoader = false;
+    const dismissLoader = () => {
+      if (hasDismissedLoader) return;
+      hasDismissedLoader = true;
+      if (loader) {
+        loader.classList.add('loaded');
+      }
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+      }
+    };
+
+    // Safety timeout: dismiss loader after 3.5s so user is never trapped by slow network
+    setTimeout(dismissLoader, 3500);
+
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = getFramePath(i);
@@ -363,16 +409,14 @@
 
         // Hide preloader when all frames are ready
         if (loadedCount === TOTAL_FRAMES) {
-          setTimeout(() => {
-            loader.classList.add('loaded');
-          }, 200);
+          setTimeout(dismissLoader, 150);
         }
       };
 
       img.onerror = () => {
         loadedCount++;
         if (loadedCount === TOTAL_FRAMES) {
-          loader.classList.add('loaded');
+          dismissLoader();
         }
       };
 
