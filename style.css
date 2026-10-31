@@ -1021,16 +1021,18 @@ img, video, canvas, svg {
 .gallery-cards-col {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: clamp(8px, 1.8vw, 14px);
+  width: 100%;
 }
 
 .gallery-card {
   position: relative;
-  border-radius: 14px;
+  border-radius: clamp(10px, 2vw, 16px);
   overflow: hidden;
   aspect-ratio: 3 / 4;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(220, 174, 130, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: var(--bg-card);
 }
 
 .gallery-card img {
@@ -1888,8 +1890,17 @@ img, video, canvas, svg {
   .timeline-desc { font-size: 12px; line-height: 1.55; }
 
   .about-bottom-grid { grid-template-columns: 1fr; gap: 26px; padding-top: 30px; }
-  .gallery-cards-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; max-width: 100%; }
-  .gallery-card { aspect-ratio: 3 / 4; border-radius: 10px; }
+  .gallery-cards-col {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: clamp(6px, 2vw, 10px) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .gallery-card {
+    aspect-ratio: 3 / 4 !important;
+    border-radius: 12px !important;
+  }
 
   .philosophy-title {
     font-size: clamp(1.45rem, 5vw, 1.9rem);
@@ -2010,9 +2021,7 @@ img, video, canvas, svg {
   .statement-pillars-row { grid-template-columns: 1fr; gap: 10px; }
   .stat-box { align-items: flex-start; }
 
-  .gallery-cards-col { grid-template-columns: 1fr; gap: 8px; }
-  .gallery-card { aspect-ratio: 16 / 9; border-radius: 8px; }
-
+  .gallery-cards-col { gap: 6px; }
   .pillars-grid { grid-template-columns: 1fr; }
 }
 
